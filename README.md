@@ -7,10 +7,10 @@ Instalar las dependencias en el entorno virtual con:
 pip install -r requirements.txt
 ```
 
-![Portada](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr01.JPG "Portada")
+![Portada](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr01.jpg "Portada")
 
-![Inicio del usuario](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr02.JPG "Inicio del usuario")
+![Inicio del usuario](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr02.jpg "Inicio del usuario")
 
-![Conversación de un mensaje](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr03.JPG "Conversación de un mensaje")
+![Conversación de un mensaje](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr03.jpg "Conversación de un mensaje")
 
-![Edición de perfil](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr04.JPG "Edición de perfil")
+![Edición de perfil](https://raw.githubusercontent.com/hcosta/web-social-curso-django-2/master/docs/img/scr04.jpg "Edición de perfil")
