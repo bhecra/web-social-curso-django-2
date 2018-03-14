@@ -10,29 +10,39 @@
             <h5><a href="/{{request.user.username}}" class="ulink">{{request.session.profile.alias}}</a></h5>
             <p><a href="/{{request.user.username}}" class="ulink">@{{request.user.username}}</a></p>
         {% endif %}
-        <!--
         <table class="table" style="margin-top:20px !important;">
             <tbody>
                 <tr>
-                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Mensajes</b></a></small></td>
-                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Respuestas</b></a></small></td>
+                    <td class="td-wrap" style="padding: 0.3rem;">
+                        <small><a href="/{{request.user.username}}/"><b>Mensajes</b></a></small>
+                    </td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.message_set.all|length}}</b></td>
                 </tr>
                 <tr>
-                    <td class="td-wrap" style="padding: 0.3rem;"><b>12</b></td>
-                    <td class="td-wrap" style="padding: 0.3rem;"><b>0</b></td>
+                    <td class="td-wrap" style="padding: 0.3rem;">
+                        <small><a href="/{{request.user.username}}/responses"><b>Respuestas</b></a></small>
+                    </td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.response_set.all|length}}</b></td>
                 </tr>
-                <tbody>
-                    <tr>
-                        <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Seguidores</b></small></a></td>
-                        <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Siguiendo</b></small></a></td>
-                    </tr>
-                    <tr>
-                        <td class="td-wrap" style="padding: 0.3rem;"><b>3</b></td>
-                        <td class="td-wrap" style="padding: 0.3rem;"><b>0</b></td>
-                    </tr>
-            </tbody>
+                <tr>
+                    <td class="td-wrap" style="padding: 0.3rem;">
+                        <small><a href="/{{request.user.username}}/following"><b>Siguiendo</b></small></a>
+                    </td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.follower_set.all|length}}</b></td>
+                </tr>
+                <tr>
+                    <td class="td-wrap" style="padding: 0.3rem;">
+                        <small><a href="/{{request.user.username}}/followers"><b>Seguidores</b></small></a>
+                    </td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.following_set.all|length}}</b></td>
+                </tr>
+                <tr>
+                    <td class="td-wrap" style="padding: 0.3rem;">
+                        <small><a href="/{{request.user.username}}/likes"><b>Me gusta</b></small></a>
+                    </td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.like_set.all|length}}</b></td>
+                </tr>
         </table>
-    -->
     </div>
     <div class="col-lg-6">
         <form action="" method="post">
@@ -51,55 +61,29 @@
             </a>
             <div style="padding-left: 70px">
                 <h6>
-                    <a href="/{{message.profile.user}}" class="ulink">
-                        {{message.profile.alias|truncatechars:25}}
-                    </a>
-                    ·
+                    <a href="/{{message.profile.user}}" class="ulink">{{message.profile.alias|truncatechars:25}}</a> ·
                     <small>
-                        <a href="/{{message.profile.user}}" class="ulink">
-                            @{{message.profile.user|truncatechars:30}}
-                        </a>
-                        · 
-                        <span title="{{message.date|date:"H:i - j M. Y"|lower}}">
-                            {{message.date|date:"j M. Y"|lower}}
-                        </span>
+                        <a href="/{{message.profile.user}}" class="ulink">@{{message.profile.user|truncatechars:30}}</a> · 
+                        <span title="{{message.date|date:"H:i - j M. Y"|lower}}">{{message.date|date:"j M. Y"|lower}}</span>
                     </small>
                 </h6>
                 <p>{{message.text}}</p>
-                <a class="btn btn-sm btn-primary" href="/{{message.profile.user}}/status/{{message.id}}" role="button">
-                    <i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp; {{message.responses}}
-                </a>
-                <a class="btn btn-sm btn-danger" href="javascript:delete_message('{{message.profile.user}}', {{message.id}})" role="button" style="margin-left:20px;">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </a>
-                <!--<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;2</button>-->
+                <!-- Botón conversación -->
+                {% include "social/includes/conversation_button.html" with message=message %} 
+                <!-- Botón me gusta -->
+                {% include "social/includes/like_button.html" with message=message %}
+                <!-- Botón borrar mensaje -->
+                {% include "social/includes/delete_button.html" with message=message %} 
             </div>
         </div>
         {% endfor %}
+        <!-- Paginador -->
+        {% include "social/includes/custom_paginator.html" with objects=messages %} 
         <br class="d-block d-md-none" />
     </div>
     <div class="col-lg-3">
-        <!--<h5>A quién seguir</h5>
-        <br>
-        <div>
-            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
-            <h6>Pepito Moños <small>@elpepe</small></h6>
-            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
-        </div>
-        <br>
-        <div>
-            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
-            <h6>Pepito Moños <small>@elpepe</small></h6>
-            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
-        </div>
-        <br>
-        <div>
-            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
-            <h6>Pepito Moños <small>@elpepe</small></h6>
-            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
-        </div>
-    -->
+        <!-- Recomendaciones -->
+        {% include "social/includes/user_right_recos.html" %} 
     </div>
 </div>
-
 {% endblock content %}

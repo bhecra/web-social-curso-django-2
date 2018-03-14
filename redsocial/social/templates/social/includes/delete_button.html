@@ -1,0 +1,7 @@
+{% if request.user == message.profile.user %}
+    <a class="btn btn-sm btn-danger" 
+    href="javascript:delete_conversation('{{message.profile.user}}', {{message.id}})" 
+    style="margin-left:10px;" role="button">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </a>
+{% endif %}

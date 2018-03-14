@@ -1,0 +1,28 @@
+<table class="table">
+    <tbody>
+        <tr>
+            <td class="td-wrap" style="padding: 0.3rem;">
+                <small><a href="/{{profile.user.username}}/"><b>Mensajes</b></a></small>
+            </td>
+            <td class="td-wrap" style="padding: 0.3rem;">
+                <small><a href="/{{profile.user.username}}/responses"><b>Respuestas</b></a></small>
+            </td>
+            <td class="td-wrap" style="padding: 0.3rem;">
+                <small><a href="/{{profile.user.username}}/following"><b>Siguiendo</b></small></a>
+            </td>
+            <td class="td-wrap" style="padding: 0.3rem;">
+                <small><a href="/{{profile.user.username}}/followers"><b>Seguidores</b></small></a>
+            </td>
+            <td class="td-wrap" style="padding: 0.3rem;">
+                <small><a href="/{{profile.user.username}}/likes"><b>Me gusta</b></small></a>
+            </td>
+        </tr>
+        <tr>
+            <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.message_set.all|length}}</b></td>
+            <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.response_set.all|length}}</b></td>
+            <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.follower_set.all|length}}</b></td>
+            <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.following_set.all|length}}</b></td>
+            <td class="td-wrap" style="padding: 0.3rem;"><b>{{profile.like_set.all|length}}</b></td>
+        </tr>
+    </tbody>
+</table>    

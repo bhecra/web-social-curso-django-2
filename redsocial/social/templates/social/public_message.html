@@ -21,59 +21,59 @@
                 {% endif %}
             </a>
             <div style="padding-left: 140px">
-                    <h5><a href="/{{message.profile.user}}" class="ulink">{{message.profile.alias|truncatechars:25}}</a> · 
+                <h5>
+                    <a href="/{{message.profile.user}}" class="ulink">{{message.profile.alias|truncatechars:25}}</a> · 
                     <small>
-                            <a href="/{{message.profile.user}}" class="ulink">@{{message.profile.user|truncatechars:30}}</a> · 
+                        <a href="/{{message.profile.user}}" class="ulink">@{{message.profile.user|truncatechars:30}}</a> · 
                         <span title="{{message.date|date:"H:i - j M. Y"|lower}}">{{message.date|date:"j M. Y"|lower}}</span>
                     </small>
                 </h5>
                 <p>{{message.text}}</p>
-                <a class="btn btn-sm btn-primary" href="/{{message.profile.user}}/status/{{message.id}}" role="button">
-                    <i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp; {{responses|length}}
-                </a>
-                <!--<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;2</button>-->
+                <!-- Botón conversación -->
+                {% include "social/includes/conversation_button.html" with message=message %} 
+                <!-- Botón Me gusta -->
+                {% include "social/includes/like_button.html" with message=message %} 
+                <!-- Botón borrar mensaje -->
+                {% include "social/includes/delete_button.html" with message=message %}
             </div>
         </div>
-        <br>
         {% if request.user.is_authenticated %}
+             <br>
             <form action="" method="post">
                 {{form}}
                 {% csrf_token %}
                 <input type="submit" class="btn btn btn-primary btn-block" value="Responder" />
             </form>
         {% endif %}
-        {% for response in responses %}
-           <div class="comment" id="r-{{response.id}}"><br>
-           <a href="/{{response.profile.user}}" class="ulink">
-               {% if response.profile.avatar %}
-                   <img src="/media/{{response.profile.avatar}}" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
-               {% else %}
-                   <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
-               {% endif %}
-           </a>
-           <div style="padding-left: 70px">
-                   <h6>
-                       <a href="/{{response.profile.user}}" class="ulink">
-                        {{response.profile.alias|truncatechars:25}}
-                    </a> 
-                    · 
-                    <small>
-                        <a href="/{{response.profile.user}}" class="ulink">
-                            @{{response.profile.user|truncatechars:30}}
-                        </a> 
-                        · 
-                       <span title="{{response.date|date:"H:i - j M. Y"|lower}}">
-                           {{response.date|date:"j M. Y"|lower}}
-                        </span>
-                    </small>
-               </h6>
-               <p>{{response.text}}</p>
-               <!--<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;2</button>-->
-           </div>
-       </div>
-       {% endfor %}
+        {% for response in message.response_set.all %}
+           <div class="comment" id="r-{{response.id}}">
+                <br>
+                <a href="/{{response.profile.user}}" class="ulink">
+                    {% if response.profile.avatar %}
+                        <img src="/media/{{response.profile.avatar}}" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                    {% else %}
+                        <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                    {% endif %}
+                </a>
+                <div style="padding-left: 70px">
+                        <h6>
+                            <a href="/{{response.profile.user}}" class="ulink">{{response.profile.alias|truncatechars:25}}</a> · 
+                            <small>
+                                <a href="/{{response.profile.user}}" class="ulink">@{{response.profile.user|truncatechars:30}}</a> · 
+                                <span title="{{response.date|date:"H:i - j M. Y"|lower}}">{{response.date|date:"j M. Y"|lower}}</span>
+                            </small>
+                    </h6>
+                    <p>{{response.text}}</p>
+                    <!-- Botón borrar respuesta -->
+                    {% include "social/includes/delete_response_button.html" with response=response %} 
+                </div>
+            </div>
+        {% endfor %}
         <br class="d-block d-md-none" />
     </div>
-    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+        <!-- Recomendaciones -->
+        {% include "social/includes/user_right_recos.html" %} 
+    </div>
 </div>
 {% endblock content %}

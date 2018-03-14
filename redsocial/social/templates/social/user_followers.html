@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <!-- Perfil columna izquierda -->
+        {% include "social/includes/user_left_profile.html" with profile=profile %}
+    </div>
+    <div class="col-lg-6">
+        <!-- Resumen de datos -->
+        {% include "social/includes/user_summary.html" with profile=profile %} 
+        <br>
+        <div class="row">
+            {% for relation in relations %}
+                <div class="col-lg-6">
+                    <a href="/{{relation.follower.user}}" class="ulink">
+                        {% if relation.follower.avatar %}
+                            <img src="/media/{{relation.follower.avatar}}" style="width:76px;height:76px;border-radius:38px;float:left;margin-right:15px;" />
+                        {% else %}
+                            <img src="/static/img/default.jpg" style="width:76px;height:76px;border-radius:38px;float:left;margin-right:15px;" />
+                        {% endif %}
+                    </a>
+                    <div style="padding-left: 70px">
+                        <h5><a href="/{{relation.follower.user}}" class="ulink">{{relation.follower.alias}}</a></h5>
+                        <p><a href="/{{relation.follower.user}}" class="ulink">@{{relation.follower.user}}</a></p>
+                    </div>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Paginador -->
+        {% include "social/includes/custom_paginator.html" with objects=relations %} 
+        <br class="d-block d-md-none" />
+    </div>
+    <div class="col-lg-3">
+        <!-- Recomendaciones -->
+        {% include "social/includes/user_right_recos.html" %} 
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <!-- Perfil columna izquierda -->
+        {% include "social/includes/user_left_profile.html" with profile=profile %}
+    </div>
+    <div class="col-lg-6">
+        <!-- Resumen de datos -->
+        {% include "social/includes/user_summary.html" with profile=profile %} 
+        <!-- Lista de mensajes -->
+        {% for message in messages %}
+        <div class="comment" id="m-{{message.id}}">
+            <br>
+            <a href="/{{message.profile.user}}" class="ulink">
+                {% if message.profile.avatar %}
+                    <img src="/media/{{message.profile.avatar}}" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                {% else %}
+                    <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                {% endif %}
+            </a>
+            <div style="padding-left: 70px">
+                    <h6>
+                        <a href="/{{message.profile.user}}" class="ulink">{{message.profile.alias|truncatechars:25}}</a> · 
+                    <small>
+                        <a href="/{{message.profile.user}}" class="ulink">@{{message.profile.user|truncatechars:30}}</a> · 
+                        <span title="{{message.date|date:"H:i - j M. Y"|lower}}">{{message.date|date:"j M. Y"|lower}}</span>
+                    </small>
+                </h6>
+                <p>{{message.text}}</p>
+                <!-- Botón conversación -->
+                {% include "social/includes/conversation_button.html" with message=message %} 
+                <!-- Botón me gusta -->
+                {% include "social/includes/like_button.html" with message=message %} 
+                <!-- Botón borrar mensaje -->
+                {% include "social/includes/delete_button.html" with message=message %} 
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Paginador -->
+        {% include "social/includes/custom_paginator.html" with objects=messages %} 
+        <br class="d-block d-md-none" />
+    </div>
+    <div class="col-lg-3">
+        <!-- Recomendaciones -->
+        {% include "social/includes/user_right_recos.html" %} 
+    </div>
+</div>
+{% endblock content %}

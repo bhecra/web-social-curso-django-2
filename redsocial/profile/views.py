@@ -13,6 +13,7 @@ def profile(request):
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
         profile = Profile(user=request.user)
+        profile.alias = profile.user.username
         profile.save()
 
     profile_form = ProfileForm(

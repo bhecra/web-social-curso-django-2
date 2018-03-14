@@ -3,7 +3,7 @@ from django import forms
 
 class ProfileForm(forms.Form):
 
-    alias = forms.CharField(label='', required=False, max_length=16, widget=forms.TextInput(
+    alias = forms.CharField(label='', required=False, max_length=25, widget=forms.TextInput(
         attrs={'placeholder': 'Alias (nombre público)', 'class': 'form-control'}))
     email = forms.EmailField(label='', required=False, min_length=8, max_length=100, widget=forms.TextInput(
         attrs={'placeholder': 'Dirección email (no se mostrará)', 'class': 'form-control'}))
@@ -15,7 +15,10 @@ class ProfileForm(forms.Form):
         attrs={'class': 'form-control'}))
 
     def save(self, profile):
-        profile.alias = self.cleaned_data.get('alias')
+        if self.cleaned_data.get('alias') == "":
+            profile.alias = profile.user.username
+        else:
+            profile.alias = self.cleaned_data.get('alias')
         profile.email = self.cleaned_data.get('email')
         profile.description = self.cleaned_data.get('description')
         profile.link = self.cleaned_data.get('link')

@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <!-- Perfil columna izquierda -->
+        {% include "social/includes/user_left_profile.html" with profile=profile %}
+    </div>
+    <div class="col-lg-6">
+        <!-- Resumen de datos -->
+        {% include "social/includes/user_summary.html" with profile=profile %} 
+
+        {% for response in responses %}
+            <div class="comment" id="r-{{response.id}}">
+                <br>
+                <a href="/{{response.profile.user}}" class="ulink">
+                    {% if response.profile.avatar %}
+                        <img src="/media/{{response.profile.avatar}}" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                    {% else %}
+                        <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                    {% endif %}
+                </a>
+                <div style="padding-left: 70px">
+                    <h6>
+                        <a href="/{{response.profile.user}}" class="ulink">
+                            {{response.profile.alias|truncatechars:25}}
+                        </a> · 
+                        <small>
+                            <a href="/{{response.profile.user}}" class="ulink">
+                                @{{response.profile.user|truncatechars:30}}
+                            </a> · 
+                        <span title="{{response.date|date:"H:i - j M. Y"|lower}}">
+                            {{response.date|date:"j M. Y"|lower}}
+                            </span>
+                        </small>
+                        <br>
+                        <small>
+                            <i>
+                                <a href="/{{response.message.profile.user}}/status/{{response.message.id}}/#r-{{response.id}}">
+                                    En respuesta a @{{response.message.profile.user.username}}
+                                </a>
+                            </i>
+                        </small>
+                    </h6>
+                    <p>{{response.text}}</p>
+                    <!-- Botón borrar respuesta -->
+                    {% include "social/includes/delete_response_button.html" with response=response %} 
+
+                </div>
+            </div>
+        {% endfor %}
+        <!-- Paginador -->
+        {% include "social/includes/custom_paginator.html" with objects=responses %} 
+        <br class="d-block d-md-none" />
+    </div>
+    <div class="col-lg-3">
+        <!-- Recomendaciones -->
+        {% include "social/includes/user_right_recos.html" %} 
+    </div>
+</div>
+{% endblock content %}

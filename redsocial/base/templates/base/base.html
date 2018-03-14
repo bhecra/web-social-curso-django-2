@@ -20,9 +20,10 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <!--<form class="form-inline d-none d-sm-block" style="flex-flow: row !important">
-                        <input class="form-control" type="text" placeholder="Buscador" aria-label="Buscador">
-                    </form>-->
+                    <!-- Buscador -->
+                    <form action="/search" method="get" class="form-inline d-none d-sm-block" style="flex-flow: row !important">
+                        <input class="form-control" type="text" placeholder="Buscador" aria-label="Buscador" name="q">
+                    </form>
                     {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown" style="margin-left: 0.5rem;">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding:0;">

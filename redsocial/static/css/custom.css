@@ -48,3 +48,7 @@ input {
 .ulink:hover, .ulink:active {
     color: inherit !important;
 }
+
+.dropdown-toggle::after {
+    display:none
+}

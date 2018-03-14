@@ -16,6 +16,6 @@ def signup(request):
             # Aquí registraremos al usuario y haremos la redirección
             user = signup_form.save()
             login(request, user)
-            return redirect("home")
+            return redirect("profile")
 
     return render(request, 'registration/signup.html', {'form': signup_form})

@@ -1,0 +1,12 @@
+{% if request.user.is_anonymous %}
+    <a class="btn btn-sm btn-secondary" href="javascript://" role="button" style="margin-left:10px;" 
+        data-username="{{message.profile.user}}">
+{% else %}
+    {% load social_extras %}
+    {% user_likes_message request.user message as user_likes %}
+    <a class="btn btn-sm {{ user_likes|yesno:"btn-success,btn-secondary" }} btn-like" 
+        href="javascript://" role="button" style="margin-left:10px;" 
+        data-username="{{message.profile.user}}" data-message-id="{{message.id}}">
+{% endif %}
+    <i class="fa fa-heart" aria-hidden="true"></i> &nbsp;<span>{{message.like_set.all|length}}</span>
+</a>

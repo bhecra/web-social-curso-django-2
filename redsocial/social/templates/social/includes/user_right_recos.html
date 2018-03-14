@@ -1,0 +1,32 @@
+{% if request.user.is_authenticated %}
+    <h5>A quién seguir</h5>
+    {% load social_extras %}
+    {% user_recommended request.user as profiles_list %}
+    {% for profile in profiles_list %}
+    <div>
+        <br>
+        <a href="/{{profile.user.username}}" class="ulink">
+            {% if profile.avatar %}
+                <img src="/media/{{profile.avatar}}" 
+                     style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+            {% else %}
+                <img src="/static/img/default.jpg" 
+                     style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+            {% endif %}
+        </a>
+        <h6>
+            <a href="/{{profile.user.username}}" class="ulink">{{profile.alias|truncatechars:25}}</a> 
+            <small>@{{profile.user.username|truncatechars:30}}</small>
+        </h6>
+        <form action="/{{profile.user}}/" method="post">
+            {% csrf_token %}
+            {% user_has_relation profile.user request.user as has_relation %}
+            {% if has_relation %}
+                <input type="submit" class="btn btn-sm btn-danger" role="button" value="Dejar de seguir" />
+            {% else %}
+                <input type="submit" class="btn btn-sm btn-primary" role="button" value="Seguir" />
+            {% endif %}
+        </form>
+    </div>
+    {% endfor %}
+{% endif %}

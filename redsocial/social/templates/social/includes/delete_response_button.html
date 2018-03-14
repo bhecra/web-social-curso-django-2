@@ -1,0 +1,7 @@
+{% if request.user == response.profile.user %}
+    <a class="btn btn-sm btn-danger" 
+    href="javascript:delete_response('{{response.profile.user}}', {{response.id}})" 
+    role="button">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </a>
+{% endif %}
