@@ -7,10 +7,10 @@ Instalar las dependencias en el entorno virtual con:
 pip install -r requirements.txt
 ```
 
-![Portada](../blob/master/docs/img/src01.JPG?raw=true "Portada")
+![Portada](./docs/img/src01.jpg?raw=true "Portada")
 
-![Inicio del usuario](../blob/master/docs/img/src02.JPG?raw=true "Inicio del usuario")
+![Inicio del usuario](./docs/img/src02.jpg?raw=true "Inicio del usuario")
 
-![Conversación de un mensaje](../blob/master/docs/img/src03.JPG?raw=true "Conversación de un mensaje")
+![Conversación de un mensaje](./docs/img/src03.jpg?raw=true "Conversación de un mensaje")
 
-![Edición de perfil](../blob/master/docs/img/src04.JPG?raw=true "Edición de perfil")
+![Edición de perfil](./docs/img/src04.jpg?raw=true "Edición de perfil")
