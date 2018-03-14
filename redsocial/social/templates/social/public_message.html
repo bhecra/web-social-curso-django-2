@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="row">
+    <div class="col-lg-3">        
+        {% if request.user.is_authenticated %}
+            {% if request.session.profile.avatar %}
+                <img src="/media/{{request.session.profile.avatar}}" style="width:56px;height:56px;border-radius: 28px;float:left;margin-right:12px;" />
+            {% else %}
+                <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius: 28px;float:left;margin-right:12px;" />
+            {% endif %}
+            <h5><a href="/{{request.user.username}}" class="ulink">{{request.session.profile.alias}}</a></h5>
+            <p><a href="/{{request.user.username}}" class="ulink">@{{request.user.username}}</a></p>
+        {% endif %}
+    </div>
+    <div class="col-lg-6">  
+        <div class="comment" style="min-height: 125px;">
+            <a href="/{{message.profile.user}}" class="ulink">
+                {% if message.profile.avatar %}
+                    <img src="/media/{{message.profile.avatar}}" style="width:125px;height:125px;border-radius:63px;float:left;margin-right:12px;" />
+                {% else %}
+                    <img src="/static/img/default.jpg" style="width:125px;height:125px;border-radius:63px;float:left;margin-right:12px;" />
+                {% endif %}
+            </a>
+            <div style="padding-left: 140px">
+                    <h5><a href="/{{message.profile.user}}" class="ulink">{{message.profile.alias|truncatechars:25}}</a> · 
+                    <small>
+                            <a href="/{{message.profile.user}}" class="ulink">@{{message.profile.user|truncatechars:30}}</a> · 
+                        <span title="{{message.date|date:"H:i - j M. Y"|lower}}">{{message.date|date:"j M. Y"|lower}}</span>
+                    </small>
+                </h5>
+                <p>{{message.text}}</p>
+                <a class="btn btn-sm btn-primary" href="/{{message.profile.user}}/status/{{message.id}}" role="button">
+                    <i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp; {{responses|length}}
+                </a>
+                <!--<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;2</button>-->
+            </div>
+        </div>
+        <br>
+        {% if request.user.is_authenticated %}
+            <form action="" method="post">
+                {{form}}
+                {% csrf_token %}
+                <input type="submit" class="btn btn btn-primary btn-block" value="Responder" />
+            </form>
+        {% endif %}
+        {% for response in responses %}
+           <div class="comment" id="r-{{response.id}}"><br>
+           <a href="/{{response.profile.user}}" class="ulink">
+               {% if response.profile.avatar %}
+                   <img src="/media/{{response.profile.avatar}}" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+               {% else %}
+                   <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+               {% endif %}
+           </a>
+           <div style="padding-left: 70px">
+                   <h6>
+                       <a href="/{{response.profile.user}}" class="ulink">
+                        {{response.profile.alias|truncatechars:25}}
+                    </a> 
+                    · 
+                    <small>
+                        <a href="/{{response.profile.user}}" class="ulink">
+                            @{{response.profile.user|truncatechars:30}}
+                        </a> 
+                        · 
+                       <span title="{{response.date|date:"H:i - j M. Y"|lower}}">
+                           {{response.date|date:"j M. Y"|lower}}
+                        </span>
+                    </small>
+               </h6>
+               <p>{{response.text}}</p>
+               <!--<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;2</button>-->
+           </div>
+       </div>
+       {% endfor %}
+        <br class="d-block d-md-none" />
+    </div>
+    <div class="col-lg-3"></div>
+</div>
+{% endblock content %}

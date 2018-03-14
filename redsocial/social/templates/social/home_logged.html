@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        {% if request.user.is_authenticated %}
+            {% if request.session.profile.avatar %}
+                <img src="/media/{{request.session.profile.avatar}}" style="width:56px;height:56px;border-radius: 28px;float:left;margin-right:12px;" />
+            {% else %}
+                <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius: 28px;float:left;margin-right:12px;" />
+            {% endif %}
+            <h5><a href="/{{request.user.username}}" class="ulink">{{request.session.profile.alias}}</a></h5>
+            <p><a href="/{{request.user.username}}" class="ulink">@{{request.user.username}}</a></p>
+        {% endif %}
+        <!--
+        <table class="table" style="margin-top:20px !important;">
+            <tbody>
+                <tr>
+                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Mensajes</b></a></small></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Respuestas</b></a></small></td>
+                </tr>
+                <tr>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>12</b></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>0</b></td>
+                </tr>
+                <tbody>
+                    <tr>
+                        <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Seguidores</b></small></a></td>
+                        <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Siguiendo</b></small></a></td>
+                    </tr>
+                    <tr>
+                        <td class="td-wrap" style="padding: 0.3rem;"><b>3</b></td>
+                        <td class="td-wrap" style="padding: 0.3rem;"><b>0</b></td>
+                    </tr>
+            </tbody>
+        </table>
+    -->
+    </div>
+    <div class="col-lg-6">
+        <form action="" method="post">
+            {{form}}
+            {% csrf_token %}
+            <input type="submit" class="btn btn btn-primary btn-block" value="Publicar" />
+        </form>
+        {% for message in messages %}
+        <div class="comment" id="m-{{message.id}}"><br>
+            <a href="/{{message.profile.user}}" class="ulink">
+                {% if message.profile.avatar %}
+                    <img src="/media/{{message.profile.avatar}}" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                {% else %}
+                    <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                {% endif %}
+            </a>
+            <div style="padding-left: 70px">
+                <h6>
+                    <a href="/{{message.profile.user}}" class="ulink">
+                        {{message.profile.alias|truncatechars:25}}
+                    </a>
+                    ·
+                    <small>
+                        <a href="/{{message.profile.user}}" class="ulink">
+                            @{{message.profile.user|truncatechars:30}}
+                        </a>
+                        · 
+                        <span title="{{message.date|date:"H:i - j M. Y"|lower}}">
+                            {{message.date|date:"j M. Y"|lower}}
+                        </span>
+                    </small>
+                </h6>
+                <p>{{message.text}}</p>
+                <a class="btn btn-sm btn-primary" href="/{{message.profile.user}}/status/{{message.id}}" role="button">
+                    <i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp; {{message.responses}}
+                </a>
+                <a class="btn btn-sm btn-danger" href="javascript:delete_message('{{message.profile.user}}', {{message.id}})" role="button" style="margin-left:20px;">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+                <!--<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;2</button>-->
+            </div>
+        </div>
+        {% endfor %}
+        <br class="d-block d-md-none" />
+    </div>
+    <div class="col-lg-3">
+        <!--<h5>A quién seguir</h5>
+        <br>
+        <div>
+            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
+            <h6>Pepito Moños <small>@elpepe</small></h6>
+            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
+        </div>
+        <br>
+        <div>
+            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
+            <h6>Pepito Moños <small>@elpepe</small></h6>
+            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
+        </div>
+        <br>
+        <div>
+            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
+            <h6>Pepito Moños <small>@elpepe</small></h6>
+            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
+        </div>
+    -->
+    </div>
+</div>
+
+{% endblock content %}

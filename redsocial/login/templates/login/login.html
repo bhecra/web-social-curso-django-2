@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %} {% block content %}
+<h3>Inicio de sesión</h3>
+<p>Introduce tus credenciales para continuar.</p>
+<div class="row">
+    <div class="col-lg-6">
+        <form action="" method="post">
+            {{form.as_p}}
+            {% csrf_token %}
+            <input type="submit" class="btn btn btn-primary btn-block" value="Acceder" />
+        </form>
+    </div>
+</div>
+{% endblock content %}

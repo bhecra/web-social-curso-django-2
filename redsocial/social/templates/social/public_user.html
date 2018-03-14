@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <p>
+            {% if profile.avatar %}
+                <img src="/media/{{profile.avatar}}" style="width:150px;height:150px;border-radius:75px;margin-top:3px;"/>
+            {% else %}
+                <img src="/static/img/default.jpg" style="width:150px;height:150px;border-radius:75px;margin-top:3px;"/>
+            {% endif %}
+        </p>
+        <h5><a href="/{{user.username}}" class="ulink">{{profile.alias|truncatechars:25}}</a></h5>
+        <p><a href="/{{user.username}}" class="ulink">@{{user.username|truncatechars:30}}</a></p>
+        {% if profile.description %}
+            <p>{{profile.description}}</p>
+        {% endif %}
+        <p>
+            {% if profile.link %}
+                <i class="fa fa-link" aria-hidden="true"></i> &nbsp;<a href="{{profile.link}}">{{profile.link|truncatechars:25}}</a><br>
+            {% endif %}
+            <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp; {{user.date_joined|date:"F"}} de {{user.date_joined|date:"Y"}} 
+        </p>
+        {% if user != request.user %}
+            <a  href="#" class="btn btn-block btn-primary"role="button">Seguir</a>
+        {% endif %}
+        <br>
+    </div>
+    <div class="col-lg-6">
+        <!--<table class="table">
+            <tbody>
+                <tr>
+                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Mensajes</b></a></small></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Respuestas</b></a></small></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Siguiendo</b></small></a></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Seguidores</b></small></a></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><small><a href="#"><b>Me gusta</b></small></a></td>
+                </tr>
+                <tr>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>12</b></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>0</b></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>3</b></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>0</b></td>
+                    <td class="td-wrap" style="padding: 0.3rem;"><b>0</b></td>
+                </tr>
+            </tbody>
+        </table>-->       
+         {% for message in messages %}
+            <br><div class="comment">
+            <a href="/{{message.profile.user}}" class="ulink">
+                {% if message.profile.avatar %}
+                    <img src="/media/{{message.profile.avatar}}" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                {% else %}
+                    <img src="/static/img/default.jpg" style="width:56px;height:56px;border-radius:28px;float:left;margin-right:12px;" />
+                {% endif %}
+            </a>
+            <div style="padding-left: 70px">
+                    <h6><a href="/{{message.profile.user}}" class="ulink">{{message.profile.alias|truncatechars:25}}</a> · 
+                    <small>
+                            <a href="/{{message.profile.user}}" class="ulink">@{{message.profile.user|truncatechars:30}}</a> · 
+                        <span title="{{message.date|date:"H:i - j M. Y"|lower}}">{{message.date|date:"j M. Y"|lower}}</span>
+                    </small>
+                </h6>
+                <p>{{message.text}}</p>
+                <a class="btn btn-sm btn-primary" href="/{{message.profile.user}}/status/{{message.id}}" role="button">
+                    <i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp; {{message.responses}}
+                </a>
+                <!--<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;2</button>
+                <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-comment-o" aria-hidden="true"></i> &nbsp;3</button>-->
+            </div>
+        </div>
+        {% endfor %}
+        <br class="d-block d-md-none" />
+    </div>
+    <div class="col-lg-3">
+        <!--<h5>A quién seguir</h5>
+        <br>
+        <div>
+            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
+            <h6>Pepito Moños <small>@elpepe</small></h6>
+            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
+        </div>
+        <br>
+        <div>
+            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
+            <h6>Pepito Moños <small>@elpepe</small></h6>
+            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
+        </div>
+        <br>
+        <div>
+            <img src="http://via.placeholder.com/56x56" style="border-radius: 28px;float:left;margin-right:12px;" />
+            <h6>Pepito Moños <small>@elpepe</small></h6>
+            <button class="btn btn-sm btn-primary" type="submit">Seguir</button>
+        </div>
+        <br>-->
+    </div>
+</div>
+{% endblock content %}

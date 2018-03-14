@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %} {% block content %}
+<h3>Editar perfil</h3>
+<p>Establece tu información personal, ningún campo es obligatorio.</p>
+<div class="row">
+    <div class="col-lg-6">
+        <form action="" method="post" enctype="multipart/form-data">
+            {{form.as_p}}
+            {% csrf_token %}
+            <input type="submit" class="btn btn btn-primary btn-block" value="Editar" />
+        </form>
+    </div>
+</div>
+{% endblock content %}

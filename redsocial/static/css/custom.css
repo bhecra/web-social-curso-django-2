@@ -1,0 +1,50 @@
+.main { 
+    padding-top: 1.25rem;
+}
+
+.footer { 
+    padding-top: 1rem;
+}
+
+
+input {
+    cursor: pointer;
+}
+
+.errorlist{
+    color: red;
+}
+
+@media (max-width: 9999px) { 
+
+    .main { 
+        padding-left: 0rem;
+        padding-right: 0rem;
+    }
+    
+}
+
+@media (max-width: 575px) { 
+
+    .main { 
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+}
+
+[for=id_avatar]{
+    font-weight: bold;
+}
+
+#avatar-clear_id, [for=avatar-clear_id] {
+    display: none;
+}
+
+.ulink {
+    color: #212529;
+}
+
+.ulink:hover, .ulink:active {
+    color: inherit !important;
+}
